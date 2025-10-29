@@ -90,6 +90,19 @@ python src/data/download_dataset.py
 jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
 ```
 
+### Data Processing
+Process raw data with validation, cleaning, and splitting:
+```bash
+python -m src.data.process_data --input data/raw/creditcard.csv --output data/processed
+```
+
+Output:
+- `data/processed/train.csv` - Training set (70%)
+- `data/processed/val.csv` - Validation set (15%)
+- `data/processed/test.csv` - Test set (15%)
+- `data/processed/scalers/` - Fitted scalers for Amount and Time
+- `data/processed/metadata.yaml` - Processing metadata
+
 ### Model Training
 ```bash
 python src/models/train.py --config configs/model_config.yaml
@@ -114,9 +127,36 @@ Performance metrics and model comparisons will be documented after training.
 - **Data Processing:** pandas, numpy
 - **Machine Learning:** scikit-learn, XGBoost, imbalanced-learn
 - **Visualization:** matplotlib, seaborn, plotly
-- **Experiment Tracking:** MLflow (optional)
-- **Testing:** pytest
+- **Experiment Tracking:** MLflow (planned)
+- **Testing:** pytest, pytest-cov
 - **Logging:** Python logging, colorlog
+- **Configuration:** PyYAML
+- **Model Persistence:** joblib
+
+## ✨ Key Features
+
+### Production-Level Data Pipeline
+- **DataLoader**: Robust CSV loading with validation and error handling
+- **DataValidator**: Comprehensive quality checks (schema, types, ranges, duplicates, class balance)
+- **DataPreprocessor**: 
+  - Configurable duplicate removal
+  - Missing value handling strategies
+  - StandardScaler for Amount and Time features
+  - Stratified train/val/test splitting (70/15/15)
+  - Scaler persistence for inference
+- **DataPipeline**: End-to-end orchestration with CLI interface
+
+### Data Quality Assurance
+- 10+ validation checks ensuring data integrity
+- Automated detection of statistical anomalies
+- Configurable thresholds for quality metrics
+- Comprehensive logging at every step
+
+### Testing & Documentation
+- Unit tests with pytest (100% pass rate)
+- Fixtures for reproducible test data
+- Clear docstrings and type hints
+- Professional git workflow (feature branches, atomic commits)
 
 ## 🌿 Git Workflow
 
@@ -129,15 +169,20 @@ This project follows a structured branching strategy:
 
 - [x] Project setup and structure
 - [x] Environment configuration
-- [ ] Exploratory Data Analysis
-- [ ] Data preprocessing pipeline
-- [ ] Feature engineering
-- [ ] Baseline model development
-- [ ] Advanced model experimentation
-- [ ] Model evaluation and comparison
-- [ ] API development
+- [x] Exploratory Data Analysis
+- [x] Data preprocessing pipeline (with validation and testing)
+- [ ] Feature engineering module
+- [ ] Baseline model development (Logistic Regression, Random Forest)
+- [ ] Advanced model experimentation (XGBoost, Isolation Forest, Neural Nets)
+- [ ] Model evaluation and comparison (with cross-validation)
+- [ ] Hyperparameter tuning (Optuna/GridSearch)
+- [ ] Model ensemble and stacking
+- [ ] MLflow experiment tracking integration
+- [ ] Real-time prediction API (FastAPI)
+- [ ] Model monitoring and drift detection
+- [ ] CI/CD pipeline (GitHub Actions)
 - [ ] Dockerization
-- [ ] Deployment
+- [ ] Deployment guide and documentation
 
 ## 👤 Author
 
